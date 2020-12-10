@@ -29,7 +29,6 @@ $(document).ready(function () {
                     //Para ambos se espar 2 segundo para ser direccionados a sus paginas
                     if (respuestaPHP == "1") {
                         alertify.success("Administrador confirmado\nIniciando!!!");
-                        $('#barra').load("php/barra/barra.php");
                         setTimeout(function () {
                             $(location).attr('href', 'sitioAdmin.php');
                         }, 2000);
