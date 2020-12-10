@@ -1,4 +1,10 @@
 <?php 
+/* 
+    AQUI VERIFICACMOS SI SE HA INICIADO SESION
+    EN CASO DE QUE SI, VERIFICAMOS QUE SEA UN USUARIO DE TIPO 1 QUE ES EL ADMINISTRADOR
+    EN CASO DE QUE NO HAYA INICIADO SESION O NO SE A UN ADMINISTRADOR
+    SE LE REDIRIGE A LA PANTALLA DE LOGIN
+*/
     session_start();
     if(isset($_SESSION['user'])){
         if($_SESSION['user'][6]!='1'){
@@ -51,6 +57,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- sE COLCA EL NOMBRE DE EL USUARIO QUE INGRESO -->
                                 <?php echo $_SESSION['user'][1].' '.$_SESSION['user'][2]?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown" onclick='cerrarSesion()'>

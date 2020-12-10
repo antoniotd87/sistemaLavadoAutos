@@ -1,4 +1,10 @@
 <?php 
+/* 
+    AQUI VERIFICACMOS SI SE HA INICIADO SESION
+    EN CASO DE QUE SI, VERIFICAMOS QUE SEA UN USUARIO DE TIPO 2 QUE ES EL ENCARGADO
+    EN CASO DE QUE NO HAYA INICIADO SESION O NO SEA UN ENCARGADO
+    SE LE REDIRIGE A LA PANTALLA DE LOGIN
+*/
     session_start();
     if(isset($_SESSION['user'])){
         if($_SESSION['user'][6]!='2'){
@@ -51,6 +57,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <!-- sE IMPRIME EL USUARIO LOGUEADO -->
                                 <?php echo $_SESSION['user'][1].' '.$_SESSION['user'][2]?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
