@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-12-2020 a las 18:16:23
+-- Tiempo de generación: 17-12-2020 a las 19:36:36
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.8
 
@@ -34,7 +34,6 @@ CREATE TABLE `autolavado` (
   `tamano` varchar(10) NOT NULL,
   `precio` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- --------------------------------------------------------
 
 --
@@ -48,7 +47,6 @@ CREATE TABLE `cliente` (
   `apellido` varchar(15) NOT NULL,
   `telefono` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
 -- --------------------------------------------------------
 
 --
@@ -63,6 +61,20 @@ CREATE TABLE `empleado` (
   `telefono` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pagoempleado`
+--
+
+CREATE TABLE `pagoempleado` (
+  `id` int(11) NOT NULL,
+  `idempleado` int(11) NOT NULL,
+  `cantidad` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `usuarios`
 --
@@ -76,6 +88,15 @@ CREATE TABLE `usuarios` (
   `pass` varchar(15) NOT NULL,
   `tipo` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `telefono`, `email`, `pass`, `tipo`) VALUES
+(1, 'Jorge Daniel', 'Lopez', '7121584875', 'daniel@correo.com', '12345678', 1),
+(2, 'Alyson', 'Vargas Barrios', '7121597825', 'alyson@correo.com', '12345678', 2);
+
 --
 -- Índices para tablas volcadas
 --
