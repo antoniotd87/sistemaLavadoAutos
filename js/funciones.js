@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // Iniciar sesion con el usuario, contraseña y el tipo de usuario
     $('#ingresar').click(function (event) {
         // Se leen los datos para iniciar sesion
@@ -46,22 +45,3 @@ $(document).ready(function () {
         }
     });
 });
-//Funcion para llamar la opcion de cerrar sesion en el servidor
-function cerrarSesion(){
-    $.ajax({
-        url: "./php/servidor.php",
-        type: "GET",
-        data: {
-            accion: 'salir'
-        },
-        success: function (respuestaPHP) {
-            if (respuestaPHP == "1") {
-                alertify.success("Saliendo!!!");
-                //Espera 2 segundos para regirigir
-                setTimeout(function () {
-                    $(location).attr('href', 'index.php');
-                }, 2000);
-            }
-        }
-    });
-}

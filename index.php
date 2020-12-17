@@ -49,7 +49,7 @@
     <br>
     <!-- 
         AQUI ES DONDE SE ENCUENTRA EL FORMULARIO CON OOS CAMPOS NECESARIOS
-     -->
+    -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
@@ -91,7 +91,7 @@
     </div>
     <!-- 
         AQUI ESTAN LOS ARCHIVOS JAVASCRIPT QUE SON NECESARIOS
-     -->
+    -->
     <script src="lib/js/jquery.js"></script>
     <script src="lib/js/bootstrap.min.js"></script>
     <script src="lib/js/alertify.js"></script>

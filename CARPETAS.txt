@@ -1,0 +1,6 @@
+assets  --   Guarda todos los archivos como fotos canciones, etc
+css     --  Guarda los archivos de estilos propios
+db      --  Guarda una copia de la base de datos
+js      -- Guarda los archivos de javascript propios para las fuciones
+lib     --  Guarda los archivos css y js que se utlizan para bootstrap, alertify, y los iconos
+php     -- Guarda los archivos de php
