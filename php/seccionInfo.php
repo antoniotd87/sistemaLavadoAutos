@@ -20,6 +20,16 @@ $result = mysqli_query($conexion,"SELECT sum(cantidad) from pagoempleado");
 $row=mysqli_fetch_array($result);
 $dinero= $dinero - $row['sum(cantidad)'];
 
+$result = mysqli_query($conexion,"SELECT sum(cantidad) from gasto");
+$row=mysqli_fetch_array($result);
+$dinero= $dinero - $row['sum(cantidad)'];
+
+$consultaSQL="SELECT * from producto";
+$ejecutarConsulta=$conexion->query($consultaSQL);
+while ($fila=$ejecutarConsulta->fetch_array()){
+    $total = $fila[2]*$fila[3];
+    $dinero= $dinero - $total;
+}
 ?>
 <div class="card border-primary col-3  mx-1">
     <div class="card-body">

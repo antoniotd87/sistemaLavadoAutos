@@ -233,15 +233,56 @@
         <div id="sectionInventario" style="display: none;">
             <h2 class="text-center">Inventario de Productos</h2>
             <div class="row justify-content-center">
-
-                <div id="divMostrarInventario" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+                    <form action="" method="post" id="frmInventario" style="display: none;">
+                        <div id="id" class="d-none"></div>
+                        <div class="form-group">
+                            <label for="nombre">Producto</label>
+                            <input type="text" name="nombre" id="productoInventario" class="form-control"
+                                placeholder="Ingrese el nombre del producto">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Cantidad</label>
+                            <input type="text" name="nombre" id="cantidadInventario" class="form-control"
+                                placeholder="Ingrese la cantidad de producto">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Precio</label>
+                            <input type="text" name="nombre" id="precioInventario" class="form-control"
+                                placeholder="Ingrese el precio del producto">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" value="Guardar" id="btnEnviarInventario" class="btn btn-primary">
+                            <input type="button" value="Cancelar" id="btnCancelarInventario" class="btn btn-info">
+                        </div>
+                    </form>
+                </div>
+                <div id="divMostrarInventarios" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
             </div>
         </div>
         <div id="sectionGastos" style="display: none;">
             <h2 class="text-center">Otros Gastos</h2>
             <div class="row justify-content-center">
-
-                <div id="divMostrarPagos" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
+                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
+                    <form action="" method="post" id="frmGasto" style="display: none;">
+                        <div id="id" class="d-none"></div>
+                        <div class="form-group">
+                            <label for="clave">Descripcion</label>
+                            <textarea name="" id="descripcionGasto" cols="10" rows="10" class="form-control"
+                                style="max-height: 5rem;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Cantidad</label>
+                            <input type="text" name="nombre" id="cantidadGasto" class="form-control"
+                                placeholder="Ingrese la cantidad utilizada">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" value="Guardar" id="btnEnviarGasto" class="btn btn-primary">
+                            <input type="button" value="Cancelar" id="btnCancelarGasto" class="btn btn-info">
+                        </div>
+                    </form>
+                </div>
+                <div id="divMostrarGastos" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
             </div>
         </div>
     </div>

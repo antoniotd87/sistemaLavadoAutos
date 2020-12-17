@@ -7,6 +7,8 @@ $(document).ready(function () {
     $("#divMostrarClientes").load("php/tablaClientes.php");
     $("#divMostrarAutoLavados").load("php/tablaAutosLavados.php");
     $("#divMostrarPagos").load("php/tablaPagos.php");
+    $("#divMostrarInventarios").load("php/tablaInventarios.php");
+    $("#divMostrarGastos").load("php/tablaGastos.php");
 
 
     //Esta funcion del boton se encarga de agregar o actualizar a un empleado
@@ -112,6 +114,7 @@ $(document).ready(function () {
             }
         });
     })
+
     $("#btnCancelarCliente").click(function (event) {
         $("#divMostrarClientes").show("fast");
         $("#frmCliente").hide("fast");
@@ -174,6 +177,57 @@ $(document).ready(function () {
         $("#frmAutoLavado")[0].reset();
     })
 
+    $("#btnEnviarGasto").click(function (event) {
+        var descripcion = $("#descripcionGasto").val();
+        var cantidad = $("#cantidadGasto").val();
+        if (descripcion === '' || cantidad === '') {
+            alertify
+                .alert("Parece que faltan datos", function () {
+                    alertify.message('OK');
+                });
+            return
+        }
+        var accion;
+        var id;
+        if ($("#btnEnviarGasto").val() == "Guardar") {
+            accion = "agregarGasto";
+        }
+        if ($("#btnEnviarGasto").val() == "Editar") {
+            accion = "editarGasto";
+            id = $("#id").html()
+        }
+        $.ajax({
+            url: "php/servidor.php",
+            type: "GET",
+            data: {
+                accion,
+                id,
+                descripcion,
+                cantidad
+            },
+            success: function (respuestaPHP) {
+                console.log(respuestaPHP);
+                if (respuestaPHP == "1") {
+                    alertify.success("Registro ejecutado correctamente");
+                    $("#divMostrarGastos").load("php/tablaGastos.php");
+                    $("#divMostrarGastos").show("fast");
+                    $("#seccionInfo").load("php/seccionInfo.php");
+                    $("#frmGasto").hide("fast");
+                    $("#frmGasto")[0].reset();
+                }
+                else {
+                    alertify.error("No se registro correctamente");
+                }
+            }
+        });
+    })
+
+    $("#btnCancelarGasto").click(function (event) {
+        $("#divMostrarGastos").show("fast");
+        $("#frmGasto").hide("fast");
+        $("#frmGasto")[0].reset();
+    })
+
     $('#clienteAutoLavado').keyup(function (e) {
         var clave = $('#clienteAutoLavado').val();
         $.ajax({
@@ -193,6 +247,7 @@ $(document).ready(function () {
             }
         });
     });
+
     $('#empleadoAutoLavado').keyup(function () {
         var clave = $('#empleadoAutoLavado').val();
         $.ajax({
@@ -211,6 +266,60 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#btnEnviarInventario").click(function (event) {
+        var producto = $("#productoInventario").val();
+        var cantidad = $("#cantidadInventario").val();
+        var precio = $("#precioInventario").val();
+        var telefono = $("#telefonoInventario").val();
+        if (cantidad === '' || precio === '' || producto === '') {
+            alertify
+                .alert("Parece que faltan datos", function () {
+                    alertify.message('OK');
+                });
+            return
+        }
+        var accion;
+        var id;
+        if ($("#btnEnviarInventario").val() == "Guardar") {
+            accion = "agregarInventario";
+        }
+        if ($("#btnEnviarInventario").val() == "Editar") {
+            accion = "editarInventario";
+            id = $("#id").html()
+        }
+        $.ajax({
+            url: "php/servidor.php",
+            type: "GET",
+            data: {
+                accion,
+                id,
+                producto,
+                cantidad,
+                precio
+            },
+            success: function (respuestaPHP) {
+                console.log(respuestaPHP);
+                if (respuestaPHP == "1") {
+                    alertify.success("Registro ejecutado correctamente");
+                    $("#divMostrarInventarios").load("php/tablaInventarios.php");
+                    $("#divMostrarInventarios").show("fast");
+                    $("#seccionInfo").load("php/seccionInfo.php");
+                    $("#frmInventario").hide("fast");
+                    $("#frmInventario")[0].reset();
+                }
+                else {
+                    alertify.error("No se registro correctamente");
+                }
+            }
+        });
+    })
+
+    $("#btnCancelarInventario").click(function (event) {
+        $("#divMostrarInventarios").show("fast");
+        $("#frmInventario").hide("fast");
+        $("#frmInventario")[0].reset();
+    })
 })
 //Funcion para editar el empleado
 function editarEmpleado(id, clave, nombre, apellido, telefono) {
@@ -437,6 +546,80 @@ function eliminarPagoEmpleado(id) {
     });
 }
 
+function editarGasto(id, descripcion, cantidad) {
+    $("#frmGasto").show("slow");
+    $("#divMostrarGastos").hide("fast");
+
+    $("#id").html(id)
+    $('#descripcionGasto').val(descripcion);
+    $("#cantidadGasto").val(cantidad);
+
+    $("#btnEnviarGasto").removeClass();
+    $('#btnEnviarGasto').addClass("btn btn-warning");
+    $('#btnEnviarGasto').val("Editar");
+    $("#btnEnviarGasto").html("<i class='fas fa-user-edit'></i> Actualizar");
+}
+//Funcion eliminar gastos
+function eliminarGastos(id) {
+    alertify.confirm("¿Deseas eliminar el auto lavado con el id " + id + "?", function (respuesta) {
+        if (respuesta) {
+            accion = "eliminarGasto";
+            $.ajax({
+                url: "php/servidor.php",
+                type: "GET",
+                data: { accion: accion, id: id },
+                success: function (respuestaPHP) {
+                    if (respuestaPHP == "1") {
+                        alertify.success("Auto Lavado eliminado exitosamente");
+                        $("#divMostrarGastos").load("php/tablaGastos.php");
+                        $("#seccionInfo").load("php/seccionInfo.php");
+                    }
+                    else {
+                        alertify.error("No se elimino correctamente");
+                    }
+                }
+            });
+        }
+    });
+}
+
+function editarInventario(id, producto, cantidad,precio) {
+    $("#frmInventario").show("slow");
+    $("#divMostrarInventarios").hide("fast");
+
+    $("#id").html(id)
+    $('#productoInventario').val(producto);
+    $("#cantidadInventario").val(cantidad);
+    $("#precioInventario").val(precio);
+
+    $("#btnEnviarInventario").removeClass();
+    $('#btnEnviarInventario').addClass("btn btn-warning");
+    $('#btnEnviarInventario').val("Editar");
+    $("#btnEnviarInventario").html("<i class='fas fa-user-edit'></i> Actualizar");
+}
+//Funcion eliminar gastos
+function eliminarInventario(id) {
+    alertify.confirm("¿Deseas eliminar el  producto con el id " + id + "?", function (respuesta) {
+        if (respuesta) {
+            accion = "eliminarInventario";
+            $.ajax({
+                url: "php/servidor.php",
+                type: "GET",
+                data: { accion: accion, id: id },
+                success: function (respuestaPHP) {
+                    if (respuestaPHP == "1") {
+                        alertify.success("Auto Lavado eliminado exitosamente");
+                        $("#divMostrarInventarios").load("php/tablaInventarios.php");
+                        $("#seccionInfo").load("php/seccionInfo.php");
+                    }
+                    else {
+                        alertify.error("No se elimino correctamente");
+                    }
+                }
+            });
+        }
+    });
+}
 
 function mostrarSeccionEmpleados() {
     $("#sectionEmpleado").show("fast");
