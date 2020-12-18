@@ -85,6 +85,9 @@ CREATE TABLE `usuarios` (
   `tipo` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `telefono`, `email`, `pass`, `tipo`) VALUES
+(1, 'Jorge Daniel', 'Lopez', '7121584875', 'daniel@correo.com', '12345678', 1),
+(2, 'Alyson', 'Vargas Barrios', '7121597825', 'alyson@correo.com', '12345678', 2);
 --
 -- Índices para tablas volcadas
 --
