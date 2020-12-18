@@ -25,6 +25,9 @@ switch ($accion) {
             echo "0";
         }
     break;
+
+    
+
     /* 
     Codigo que permite guardar el empleado en la base de datos
     */
@@ -43,6 +46,7 @@ switch ($accion) {
         echo "0";
         }
     break;
+
     /* 
         Este codigo permite actualizar la informacion de un epleado a un empleado
     */
@@ -64,6 +68,7 @@ switch ($accion) {
             echo "0";
         }
     break;
+
     /* 
         codigo que permite eliminar el empleado
     */
@@ -81,8 +86,10 @@ switch ($accion) {
         }
     break;
 
+
+
     /* 
-    Codigo que permite guardar el cliente en la base de datos
+        Codigo que permite guardar el cliente en la base de datos
     */
     case 'agregarCliente':
         $clave=$_GET["clave"];
@@ -99,6 +106,7 @@ switch ($accion) {
         echo "0";
         }
     break;
+
     /* 
         Este codigo permite actualizar la informacion de un cliente
     */
@@ -120,6 +128,7 @@ switch ($accion) {
             echo "0";
         }
     break;
+
     /* 
         codigo que permite eliminar el cliente
     */
@@ -138,7 +147,8 @@ switch ($accion) {
     break;
 
 
-        /* 
+
+    /* 
     Codigo que permite guardar el auto lavado a la base de datos
     */
     case 'agregarAutoLavado':
@@ -156,6 +166,7 @@ switch ($accion) {
             echo "0";
         }
     break;
+
     /* 
         Este codigo permite actualizar la informacion de un auto lavado a la base de datos un empleado
     */
@@ -177,6 +188,7 @@ switch ($accion) {
             echo "0";
         }
     break;
+
     /* 
         codigo que permite eliminar el un auto lavado
     */
@@ -194,7 +206,9 @@ switch ($accion) {
         }
     break;
 
-
+    /* 
+        Este codigo de encarga de devolver la informacion del cliente que fue a lavar su auto
+    */
     case 'buscarCliente';
         $clave=$_GET["clave"];
         $sql="SELECT * FROM cliente WHERE clave = '$clave'";
@@ -207,6 +221,9 @@ switch ($accion) {
         }
     break;
 
+    /* 
+        Este codigo de encarga de devolver la informacion del empleado que va a lavar el auto
+    */
     case 'buscarEmpleado';
         $clave=$_GET["clave"];
         $sql="SELECT * FROM empleado WHERE clave = '$clave'";
@@ -218,6 +235,9 @@ switch ($accion) {
         }
     break;
 
+    /* 
+        Codifo que ferifica si un usuario a lavado suato 5 veces
+    */
     case 'verificarLavadoGratis';
         $id=$_GET["id"];
         $sql="SELECT * FROM autolavado WHERE idcliente = '$id'";
@@ -229,6 +249,12 @@ switch ($accion) {
         echo $numeroAutosLavados;
     break;
 
+
+
+    /* 
+        Codigo que permite pagarle a un empleado con su respectiva
+        comision de 5% de su salario por cada auto lavado
+    */
     case 'pagarEmpleado';
         $id=$_GET["id"];
         $result = mysqli_query($conexion,"SELECT COUNT(*) from autolavado where idempleado = '$id'");
@@ -246,6 +272,10 @@ switch ($accion) {
             echo "0";
         }
     break;
+    
+    /* 
+        Codigo para eliminar pago al empleado
+    */
     case 'eliminarPagoEmpleado';
         $id=$_GET["id"];
         $sql="DELETE from pagoempleado where id='$id'";
@@ -260,19 +290,11 @@ switch ($accion) {
         }
     break;
 
-    case 'eliminarPagoEmpleado';
-        $id=$_GET["id"];
-        $sql="DELETE from pagoempleado where id='$id'";
-        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
-        $conexion->error);
-        if ($ejecutarSQL) {
-            echo "1";
-        }
-        else
-        {
-            echo "0";
-        }
-    break;
+
+
+    /* 
+        Codigo para agregar un gasto de el local
+    */
     case 'agregarGasto':
         $descripcion=$_GET["descripcion"];
         $cantidad=$_GET["cantidad"];
@@ -287,6 +309,9 @@ switch ($accion) {
         } 
     break;
 
+    /* 
+        Codigo para editar un gasto de el local
+    */
     case 'editarGasto':
         $id = $_GET["id"];
         $descripcion=$_GET["descripcion"];
@@ -303,6 +328,9 @@ switch ($accion) {
         }
     break;
 
+    /* 
+        Codigo para eliminar un gasto de el local
+    */
     case 'eliminarGasto';
         $id=$_GET["id"];
         $sql="DELETE from gasto where id='$id'";
@@ -317,6 +345,11 @@ switch ($accion) {
         }
     break;
 
+
+
+    /* 
+        Codigo para agregar un producto al inventario
+    */
     case 'agregarInventario':
         $producto=$_GET["producto"];
         $cantidad=$_GET["cantidad"];
@@ -333,6 +366,9 @@ switch ($accion) {
         }
     break;
 
+    /* 
+        Codigo para ditar un producto del inventario
+    */
     case 'editarInventario':
         $id = $_GET["id"];
         $producto=$_GET["producto"];
@@ -350,6 +386,9 @@ switch ($accion) {
         }
     break;
 
+    /* 
+        Codigo para eliminar un producto al inventario
+    */
     case 'eliminarInventario';
         $id=$_GET["id"];
         $sql="DELETE from producto where id='$id'";
@@ -363,6 +402,9 @@ switch ($accion) {
             echo "0";
         }
     break;
+
+
+    
     /* 
         AQUI SE DESTRYE LA SESION PARA QUE EL USUARIO, AL SALIR, YA NO PUEDA VOLVER
         A ENTRAR HASTA QUE INGRESE SUS DATOS

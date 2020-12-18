@@ -1,4 +1,8 @@
 <?php
+/* 
+    Este archivo consulta a la base de datos los gastos, 
+    Y los muestra en la tabla
+*/
 include "conexion.php";
 $consultaSQL="SELECT * from gasto";
 $ejecutarConsulta=$conexion->query($consultaSQL);

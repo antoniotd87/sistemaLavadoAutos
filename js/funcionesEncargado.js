@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    $("#sectionEmpleado").show("fast");
-    $("#sectionCliente").hide("fast");
 
+    /* 
+        Esa seccion carga todas las tablas e informacion necesaria del sistema
+    */
     $("#seccionInfo").load("php/seccionInfo.php");
     $("#divMostrarEmpleados").load("php/tablaEmpleados.php");
     $("#divMostrarClientes").load("php/tablaClientes.php");
@@ -11,8 +12,11 @@ $(document).ready(function () {
     $("#divMostrarGastos").load("php/tablaGastos.php");
 
 
-    //Esta funcion del boton se encarga de agregar o actualizar a un empleado
-    //Dependiendo del lo que diga el boton
+
+    /* 
+        Esta funcion del boton se encarga de agregar o actualizar a un empleado
+        Dependiendo del lo que diga el boton 
+    */
     $("#btnEnviarEmpleado").click(function (event) {
         var clave = $("#claveEmpleado").val();
         var nombre = $("#nombreEmpleado").val();
@@ -60,14 +64,23 @@ $(document).ready(function () {
             }
         });
     })
+
+    /* 
+        Cuando el encargado decida cancelar el registro o 
+        modificacion de un empleado, esta es la funcion
+    */
     $("#btnCancelarEmpleado").click(function (event) {
         $("#divMostrarEmpleados").show("fast");
         $("#frmEmpleado").hide("fast");
         $("#frmEmpleado")[0].reset();
     })
 
-    //Esta funcion del boton se encarga de agregar o actualizar a un cliente
-    //Dependiendo del lo que diga el boton
+
+
+    /* 
+        Esta funcion del boton se encarga de agregar o actualizar a un cliente
+        Dependiendo del lo que diga el boton
+     */
     $("#btnEnviarCliente").click(function (event) {
         var clave = $("#claveCliente").val();
         var nombre = $("#nombreCliente").val();
@@ -115,18 +128,35 @@ $(document).ready(function () {
         });
     })
 
+    /* 
+        Cuando el encargado decida cancelar el registro o 
+        modificacion de un cliente, esta es la funcion
+    */
     $("#btnCancelarCliente").click(function (event) {
         $("#divMostrarClientes").show("fast");
         $("#frmCliente").hide("fast");
         $("#frmCliente")[0].reset();
     })
 
-    //AutoLavado
+
+
+    /* 
+        Esta funcion del boton agragar autolavado se encarga de agregar o actualizar
+        un auto que se haya lavado
+        Dependiendo del lo que diga el boton
+     */
     $("#btnEnviarAutoLavado").click(function (event) {
         var idcliente = $("#idcliente").html();
         var idempleado = $("#idempleado").html();
         var tamano = $('#tamanoAutoLavado').val();
         var precio = $("#precioAutoLavado").val();
+        if (precio == 0) {
+            alertify
+                .alert("Felicidades, ha lavado su auto con nosotros 5 veces, " +
+                    "asi que por esta ocacion es gratis", function () {
+                        alertify.message('OK');
+                    });
+        }
         if (idempleado === '' || tamano === '' || precio === '' || idcliente === '') {
             alertify
                 .alert("Parece que faltan datos", function () {
@@ -171,12 +201,70 @@ $(document).ready(function () {
         });
     })
 
+    /* 
+        Funcion para poder consultar los datos del cliente
+        cundo se va a realizar un registro de lavado
+    */
+    $('#clienteAutoLavado').keyup(function (e) {
+        var clave = $('#clienteAutoLavado').val();
+        $.ajax({
+            url: "./php/servidor.php",
+            type: "GET",
+            data: {
+                accion: 'buscarCliente',
+                clave
+            },
+            success: function (respuestaPHP) {
+                if (respuestaPHP != '') {
+                    datos = respuestaPHP.split('&')
+                    $('#clienteAutoLavadoNombre').val(datos[1])
+                    $('#idcliente').html(datos[0])
+                    establecerPrecio();
+                }
+            }
+        });
+    });
+
+        /* 
+        Funcion para poder consultar los datos del empleado
+        cundo se va a realizar un registro de lavado
+    */
+    $('#empleadoAutoLavado').keyup(function () {
+        var clave = $('#empleadoAutoLavado').val();
+        $.ajax({
+            url: "./php/servidor.php",
+            type: "GET",
+            data: {
+                accion: 'buscarEmpleado',
+                clave
+            },
+            success: function (respuestaPHP) {
+                if (respuestaPHP != '') {
+                    datos = respuestaPHP.split('&')
+                    $('#empleadoAutoLavadoNombre').val(datos[1])
+                    $('#idempleado').html(datos[0])
+                }
+            }
+        });
+    });
+
+    /* 
+        Cuando el encargado decida cancelar el registro o 
+        modificacion de un autolavdo, esta es la funcion
+    */
     $("#btnCancelarAutoLavado").click(function (event) {
         $("#divMostrarAutoLavados").show("fast");
         $("#frmAutoLavado").hide("fast");
         $("#frmAutoLavado")[0].reset();
     })
 
+
+
+    /* 
+        Esta funcion del boton agragar autolavado se encarga de agregar o actualizar
+        un gasto que se haya realizado en el local
+        Dependiendo del lo que diga el boton agrega o edita
+     */
     $("#btnEnviarGasto").click(function (event) {
         var descripcion = $("#descripcionGasto").val();
         var cantidad = $("#cantidadGasto").val();
@@ -222,51 +310,23 @@ $(document).ready(function () {
         });
     })
 
+    /* 
+        Cuando el encargado decida cancelar el registro o 
+        modificacion de un gasto, esta es la funcion
+    */
     $("#btnCancelarGasto").click(function (event) {
         $("#divMostrarGastos").show("fast");
         $("#frmGasto").hide("fast");
         $("#frmGasto")[0].reset();
     })
 
-    $('#clienteAutoLavado').keyup(function (e) {
-        var clave = $('#clienteAutoLavado').val();
-        $.ajax({
-            url: "./php/servidor.php",
-            type: "GET",
-            data: {
-                accion: 'buscarCliente',
-                clave
-            },
-            success: function (respuestaPHP) {
-                if (respuestaPHP != '') {
-                    datos = respuestaPHP.split('&')
-                    $('#clienteAutoLavadoNombre').val(datos[1])
-                    $('#idcliente').html(datos[0])
-                    establecerPrecio();
-                }
-            }
-        });
-    });
 
-    $('#empleadoAutoLavado').keyup(function () {
-        var clave = $('#empleadoAutoLavado').val();
-        $.ajax({
-            url: "./php/servidor.php",
-            type: "GET",
-            data: {
-                accion: 'buscarEmpleado',
-                clave
-            },
-            success: function (respuestaPHP) {
-                if (respuestaPHP != '') {
-                    datos = respuestaPHP.split('&')
-                    $('#empleadoAutoLavadoNombre').val(datos[1])
-                    $('#idempleado').html(datos[0])
-                }
-            }
-        });
-    });
 
+    /* 
+        Esta funcion del boton agregar producto se encarga de agregar o actualizar
+        el inventario de productos de el local
+        Dependiendo del lo que diga el boton agrega o edita
+     */
     $("#btnEnviarInventario").click(function (event) {
         var producto = $("#productoInventario").val();
         var cantidad = $("#cantidadInventario").val();
@@ -315,12 +375,17 @@ $(document).ready(function () {
         });
     })
 
+    /* 
+        Cuando el encargado decida cancelar el registro o 
+        modificacion de un producto, esta es la funcion
+    */
     $("#btnCancelarInventario").click(function (event) {
         $("#divMostrarInventarios").show("fast");
         $("#frmInventario").hide("fast");
         $("#frmInventario")[0].reset();
     })
 })
+
 //Funcion para editar el empleado
 function editarEmpleado(id, clave, nombre, apellido, telefono) {
     $("#frmEmpleado").show("slow");
@@ -362,6 +427,7 @@ function eliminarEmpleado(id) {
 }
 
 
+
 //Funcion para editar el cliente
 function editarCliente(id, clave, nombre, apellido, telefono) {
     $("#frmCliente").show("slow");
@@ -401,8 +467,10 @@ function eliminarCliente(id) {
     });
 }
 
+
+
 //Funcion para editar el empleado
-function editarAutoLavado(id, nombreEmpleado, idEmpleado, claveEmpleado,nombreCliente, idCliente, claveCliente, tamano, precio ) {
+function editarAutoLavado(id, nombreEmpleado, idEmpleado, claveEmpleado, nombreCliente, idCliente, claveCliente, tamano, precio) {
     $("#frmAutoLavado").show("slow");
     $("#divMostrarAutoLavados").hide("fast");
 
@@ -411,7 +479,7 @@ function editarAutoLavado(id, nombreEmpleado, idEmpleado, claveEmpleado,nombreCl
     $("#idempleado").html(idEmpleado);
     $('#tamanoAutoLavado').val(tamano);
     $("#precioAutoLavado").val(precio);
-    
+
     $('#clienteAutoLavadoNombre').val(nombreCliente)
     $('#clienteAutoLavado').val(claveCliente)
     $('#empleadoAutoLavadoNombre').val(nombreEmpleado)
@@ -447,29 +515,13 @@ function eliminarAutoLavado(id) {
     });
 }
 
-//Funcion para llamar la opcion de cerrar sesion en el servidor
-function cerrarSesion() {
-    $.ajax({
-        url: "./php/servidor.php",
-        type: "GET",
-        data: {
-            accion: 'salir'
-        },
-        success: function (respuestaPHP) {
-            if (respuestaPHP == "1") {
-                alertify.success("Saliendo!!!");
-                //Espera 2 segundos para regirigir
-                setTimeout(function () {
-                    $(location).attr('href', 'index.php');
-                }, 2000);
-            }
-        }
-    });
-}
+/* 
+    Establece el precio de un empleado, en caso de que 
+    haya lavado su auto 5 veces, el lavado es gratis 
+*/
 function establecerPrecio() {
     var tipo = $('#tamanoAutoLavado').val()
     var precio;
-    var gratis;
     $.ajax({
         url: "./php/servidor.php",
         type: "GET",
@@ -479,7 +531,6 @@ function establecerPrecio() {
         },
         success: function (respuestaPHP) {
             if (((parseInt(respuestaPHP) + 1) / 6) == 1) {
-                console.log('gratis');
                 precio = 0
             } else {
                 switch (tipo) {
@@ -500,6 +551,10 @@ function establecerPrecio() {
         }
     });
 }
+
+
+
+//Funcion para pagarle a un empleado
 function pagarEmpleado(id) {
 
     alertify.confirm("¿Deseas pagar el sueldo del empleado con el " + id + "?", function (respuesta) {
@@ -523,6 +578,8 @@ function pagarEmpleado(id) {
     })
 
 }
+
+//Funcion para eliminar un empleado
 function eliminarPagoEmpleado(id) {
     alertify.confirm("¿Deseas eliminar el pago de ingles con el id " + id + "?", function (respuesta) {
         if (respuesta) {
@@ -546,6 +603,9 @@ function eliminarPagoEmpleado(id) {
     });
 }
 
+
+
+//Funcion editar gasto
 function editarGasto(id, descripcion, cantidad) {
     $("#frmGasto").show("slow");
     $("#divMostrarGastos").hide("fast");
@@ -583,7 +643,10 @@ function eliminarGastos(id) {
     });
 }
 
-function editarInventario(id, producto, cantidad,precio) {
+
+
+//Esta es la funcion para editar el inventario
+function editarInventario(id, producto, cantidad, precio) {
     $("#frmInventario").show("slow");
     $("#divMostrarInventarios").hide("fast");
 
@@ -621,7 +684,15 @@ function eliminarInventario(id) {
     });
 }
 
+
+
+/* 
+    Este es el codigo que se encarga
+    de mostrar cada una se las secciones de programa
+*/
 function mostrarSeccionEmpleados() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").show("fast");
     $("#sectionCliente").hide("fast");
     $("#sectionAutoLavado").hide("fast");
@@ -630,6 +701,8 @@ function mostrarSeccionEmpleados() {
     $("#sectionGastos").hide("fast");
 }
 function mostrarSeccionClientes() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").hide("fast");
     $("#sectionCliente").show("fast");
     $("#sectionAutoLavado").hide("fast");
@@ -638,6 +711,8 @@ function mostrarSeccionClientes() {
     $("#sectionGastos").hide("fast");
 }
 function mostrarSeccionAutos() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").hide("fast");
     $("#sectionCliente").hide("fast");
     $("#sectionAutoLavado").show("fast");
@@ -646,6 +721,8 @@ function mostrarSeccionAutos() {
     $("#sectionGastos").hide("fast");
 }
 function mostrarSeccionPagos() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").hide("fast");
     $("#sectionCliente").hide("fast");
     $("#sectionAutoLavado").hide("fast");
@@ -654,6 +731,8 @@ function mostrarSeccionPagos() {
     $("#sectionGastos").hide("fast");
 }
 function mostrarSeccionInventario() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").hide("fast");
     $("#sectionCliente").hide("fast");
     $("#sectionAutoLavado").hide("fast");
@@ -662,10 +741,34 @@ function mostrarSeccionInventario() {
     $("#sectionGastos").hide("fast");
 }
 function mostrarSeccionGastos() {
+    $("#inicio").hide("fast");
+    $("#seccionInfo").show("fast");
     $("#sectionEmpleado").hide("fast");
     $("#sectionCliente").hide("fast");
     $("#sectionAutoLavado").hide("fast");
     $("#sectionPagos").hide("fast");
     $("#sectionInventario").hide("fast");
     $("#sectionGastos").show("fast");
+}
+
+
+
+//Funcion para llamar la opcion de cerrar sesion en el servidor
+function cerrarSesion() {
+    $.ajax({
+        url: "./php/servidor.php",
+        type: "GET",
+        data: {
+            accion: 'salir'
+        },
+        success: function (respuestaPHP) {
+            if (respuestaPHP == "1") {
+                alertify.success("Saliendo!!!");
+                //Espera 2 segundos para regirigir
+                setTimeout(function () {
+                    $(location).attr('href', 'index.php');
+                }, 2000);
+            }
+        }
+    });
 }

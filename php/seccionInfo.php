@@ -1,4 +1,9 @@
 <?php
+
+/* 
+    Este archivo muestra la informacion de los empleados y de los autos lavados
+*/
+
 include "conexion.php";
 $empleados = 50;
 $autos = 25;
@@ -11,6 +16,13 @@ $empleados= $row['COUNT(*)'];
 $result = mysqli_query($conexion,"SELECT COUNT(*) FROM autolavado");
 $row=mysqli_fetch_array($result);
 $autos= $row['COUNT(*)'];
+
+/* 
+    Aqui se calcula el dinero disponible,
+    se trae el dinero delos autos lavados
+    y despues se le resta el dinero de los gastos,
+    de los pagos a empleados y del inventario de producto
+*/
 
 $result = mysqli_query($conexion,"SELECT sum(precio) from autolavado");
 $row=mysqli_fetch_array($result);
@@ -30,6 +42,10 @@ while ($fila=$ejecutarConsulta->fetch_array()){
     $total = $fila[2]*$fila[3];
     $dinero= $dinero - $total;
 }
+
+/* 
+    Despues se crean las secciones para mostrar esa informcacion
+*/
 ?>
 <div class="card border-primary col-3  mx-1">
     <div class="card-body">

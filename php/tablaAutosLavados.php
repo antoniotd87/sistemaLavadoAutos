@@ -1,4 +1,9 @@
 <?php
+/* 
+    Este archivo consulta a la base de datos los autos lavados, 
+    ademas de traer el empleado y el cliente correspondiente
+    Y los muestra en la tabla
+*/
 include "conexion.php";
 $consultaSQL="SELECT 
                 autolavado.id, 

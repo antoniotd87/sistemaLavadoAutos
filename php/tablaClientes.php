@@ -1,4 +1,8 @@
 <?php
+/* 
+    Este archivo consulta a la base de datos los clientes, 
+    Y los muestra en la tabla
+*/
 include "conexion.php";
 $consultaSQL="SELECT * from cliente";
 $ejecutarConsulta=$conexion->query($consultaSQL);

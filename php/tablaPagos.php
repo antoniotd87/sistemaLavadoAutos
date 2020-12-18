@@ -1,4 +1,8 @@
 <?php
+/* 
+    Este archivo consulta a la base de datos los pagos e los empleados, 
+    Y los muestra en la tabla
+*/
 include "conexion.php";
 $consultaSQL="SELECT * from pagoempleado";
 $ejecutarConsulta=$conexion->query($consultaSQL);

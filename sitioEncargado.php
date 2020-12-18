@@ -36,6 +36,7 @@
 </head>
 
 <body>
+    <!-- Barra de navegacion -->
     <header id="barra">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -87,16 +88,68 @@
             </div>
         </nav>
     </header>
-    <br>
-    <br>
-    <div class="container">
-        <div class="row justify-content-center" id="seccionInfo">
 
+    <!-- Seccion de Inicio -->
+    <main role="main" id="inicio">
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">Sistema El Carrito Feliz!</h1>
+                <p>Este sistema permite la automatizacion de el proceso de gestion de autolavado, administracion de empleados, clientes y el seguimiento de los 
+                    gastos y pagos a empleados
+                </p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="assets/Coche.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Autos pequeños</h5>
+                            <p class="card-text">El lavado de autos pequeños, regularmente los coches, tienen un precio de $ 120 pesos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="assets/Camioneta.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Autos medianos</h5>
+                            <p class="card-text">El lavado de autos medianos, de tipo camioneta, tienen un precio de $ 200 pesos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="assets/Camion.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Camiones</h5>
+                            <p class="card-text">El lavado de vehiculos grandes, de tipo camion, tienen un precio de $ 400 pesos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- /container -->
+
+    </main>
+    <br>
+
+    <!-- Seccion de informacion -->
+    <div class="container">
+        <div class="row justify-content-center" id="seccionInfo" style="display: none;">
         </div>
     </div>
+    <hr>
     <br>
+
+    <!-- Cada una de las secciones del sistema -->
     <div class="container">
-        <div id="sectionEmpleado">
+        <div id="sectionEmpleado" style="display: none;">
             <h2 class="text-center">Empleados</h2>
             <div class="row justify-content-center">
                 <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6 col-xl-6">
