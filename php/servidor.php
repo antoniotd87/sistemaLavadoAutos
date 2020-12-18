@@ -260,6 +260,109 @@ switch ($accion) {
         }
     break;
 
+    case 'eliminarPagoEmpleado';
+        $id=$_GET["id"];
+        $sql="DELETE from pagoempleado where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    break;
+    case 'agregarGasto':
+        $descripcion=$_GET["descripcion"];
+        $cantidad=$_GET["cantidad"];
+        $sql="INSERT into gasto values (0,'$descripcion','$cantidad')";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+        echo "0";
+        } 
+    break;
+
+    case 'editarGasto':
+        $id = $_GET["id"];
+        $descripcion=$_GET["descripcion"];
+        $cantidad=$_GET["cantidad"];
+        $sql="UPDATE gasto set descripcion='$descripcion', cantidad='$cantidad' where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        } 
+        else
+        {
+            echo "0";
+        }
+    break;
+
+    case 'eliminarGasto';
+        $id=$_GET["id"];
+        $sql="DELETE from gasto where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    break;
+
+    case 'agregarInventario':
+        $producto=$_GET["producto"];
+        $cantidad=$_GET["cantidad"];
+        $precio=$_GET["precio"];
+
+        $sql="INSERT into producto values (0,'$producto','$cantidad','$precio')";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+        echo "0";
+        }
+    break;
+
+    case 'editarInventario':
+        $id = $_GET["id"];
+        $producto=$_GET["producto"];
+        $cantidad=$_GET["cantidad"];
+        $precio=$_GET["precio"];
+        $sql="UPDATE producto set nombre='$producto', cantidad='$cantidad',  precio='$precio' where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        } 
+        else
+        {
+            echo "0";
+        }
+    break;
+
+    case 'eliminarInventario';
+        $id=$_GET["id"];
+        $sql="DELETE from producto where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    break;
     /* 
         AQUI SE DESTRYE LA SESION PARA QUE EL USUARIO, AL SALIR, YA NO PUEDA VOLVER
         A ENTRAR HASTA QUE INGRESE SUS DATOS
