@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="lib/css/iconos.css">
 </head>
 
-<body>
+<body  class = "bg-light">
     <!--
     TENEMOS ESTA UNA BARRA DE NAVEGACION EN LA PARTE DE ARRIBA DE LA PAGINA
     -->

@@ -5,8 +5,6 @@
     Y los muestra en la tabla
 */
 include "conexion.php";
-session_start();
-$idusuario=(int)$_SESSION['user'][0];
 $consultaSQL="SELECT 
                 autolavado.id, 
                 empleado.nombre,
@@ -15,30 +13,26 @@ $consultaSQL="SELECT
                 cliente.apellido, 
                 autolavado.tamano, 
                 autolavado.precio,
-                empleado.id,
-                empleado.clave,
-                cliente.id,
-                cliente.clave,
+                usuarios.nombre,
+                usuarios.apellido,
                 autolavado.fecha
             FROM autolavado 
                 INNER JOIN cliente ON autolavado.idcliente = cliente.id 
                 INNER JOIN empleado ON autolavado.idempleado = empleado.id
-                INNER JOIN usuarios ON empleado.idusuario = usuarios.id
-            WHERE usuarios.id = $idusuario";
+                INNER JOIN usuarios ON empleado.idusuario = usuarios.id";
 $ejecutarConsulta=$conexion->query($consultaSQL);
 ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#tablaAutoLavado").DataTable();
-        $("#btnNuevoAutoLavado").click(function (e) {
-            $("#divMostrarAutoLavados").hide("fast");
-            $("#frmAutoLavado").show("fast");
+        $("#btnImprimirAutoLavado").click(function (e) {
+            window.open("php/imprimir/dineroIngresado.php","","fullscreen");
         })
     });
 </script>
 <div class="row">
     <div class='col-12' style='text-align: center; '>
-        <button type='button' class='btn btn-primary' id='btnNuevoAutoLavado'> Nuevo </button>
+        <button type='button' class='btn btn-success' id='btnImprimirAutoLavado'> Imprimir </button>
     </div>
 </div>
 <br>
@@ -47,16 +41,16 @@ $ejecutarConsulta=$conexion->query($consultaSQL);
         <th>Id</th>
         <th>Empleado</th>
         <th>Cliente</th>
+        <th>Encargado responsable</th>
         <th>Tamaño</th>
         <th>Precio</th>
-        <th>Registro</th>
-        <th>Eliminar</th>
-        <th>Editar</th>
+        <th>Fecha</th>
     </thead>
     <?php
     while ($fila=$ejecutarConsulta->fetch_array()){
         $nombreEmpleado= $fila[1].' '.$fila[2];
         $nombreCliente=$fila[3].' '.$fila[4];
+        $nombreEncargado=$fila[7].' '.$fila[8];
         $tamano='';
         switch($fila[5]){
             case 'S':
@@ -74,27 +68,10 @@ $ejecutarConsulta=$conexion->query($consultaSQL);
         <td><?php echo $fila[0]?></td>
         <td><?php echo $nombreEmpleado?></td>
         <td><?php echo $nombreCliente?></td>
+        <td><?php echo $nombreEncargado?></td>
         <td><?php echo $tamano?></td>
         <td><?php echo $fila[6]?></td>
-        <td><?php echo $fila[11]?></td>
-        <td>
-            <p class='btn btn-danger' onclick='eliminarAutoLavado(<?php echo $fila[0]?>)'>Eliminar</p>
-        </td>
-        <td>
-            <p class='btn btn-warning' onclick='editarAutoLavado(
-                "<?php echo $fila[0]?>",
-                "<?php echo $nombreEmpleado?>",
-                "<?php echo $fila[7]?>",
-                "<?php echo $fila[8]?>",
-                "<?php echo $nombreCliente?>",
-                "<?php echo $fila[9]?>",
-                "<?php echo $fila[10]?>",
-                "<?php echo $fila[5]?>",
-                "<?php echo $fila[6]?>"
-                )'>
-                Editar
-            </p>
-        </td>
+        <td><?php echo $fila[9]?></td>
     </tr>
     <?php
     }

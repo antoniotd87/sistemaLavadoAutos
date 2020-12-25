@@ -8,12 +8,22 @@ include "conexion.php";
 $empleados = 50;
 $autos = 25;
 $dinero = 2250;
-
-$result = mysqli_query($conexion,"SELECT COUNT(*) FROM empleado");
+session_start();
+$idusuario=(int)$_SESSION['user'][0];
+$result = mysqli_query($conexion,"SELECT COUNT(*) 
+                                    FROM empleado 
+                                        INNER JOIN usuarios 
+                                            ON usuarios.id = empleado.idusuario 
+                                        WHERE usuarios.id = $idusuario");
 $row=mysqli_fetch_array($result);
 $empleados= $row['COUNT(*)'];
 
-$result = mysqli_query($conexion,"SELECT COUNT(*) FROM autolavado");
+$result = mysqli_query($conexion,"SELECT COUNT(*) 
+                                    FROM autolavado 
+                                        INNER JOIN empleado 
+                                            ON empleado.id = autolavado.idempleado 
+                                        INNER JOIN usuarios ON usuarios.id = empleado.idusuario 
+                                    WHERE usuarios.id = $idusuario");
 $row=mysqli_fetch_array($result);
 $autos= $row['COUNT(*)'];
 
@@ -23,23 +33,35 @@ $autos= $row['COUNT(*)'];
     y despues se le resta el dinero de los gastos,
     de los pagos a empleados y del inventario de producto
 */
-
-$result = mysqli_query($conexion,"SELECT sum(precio) from autolavado");
+$dinero = 0;
+$result = mysqli_query($conexion,"SELECT sum(precio) from autolavado
+                                    INNER JOIN empleado 
+                                            ON empleado.id = autolavado.idempleado 
+                                        INNER JOIN usuarios ON usuarios.id = empleado.idusuario 
+                                    WHERE usuarios.id = $idusuario");
 $row=mysqli_fetch_array($result);
 $dinero= $row['sum(precio)'];
 
-$result = mysqli_query($conexion,"SELECT sum(cantidad) from pagoempleado");
+$result = mysqli_query($conexion,"SELECT sum(cantidad) from pagoempleado
+                                    INNER JOIN empleado 
+                                            ON empleado.id = pagoempleado.idempleado 
+                                        INNER JOIN usuarios ON usuarios.id = empleado.idusuario 
+                                    WHERE usuarios.id = $idusuario");
 $row=mysqli_fetch_array($result);
 $dinero= $dinero - $row['sum(cantidad)'];
 
-$result = mysqli_query($conexion,"SELECT sum(cantidad) from gasto");
+$result = mysqli_query($conexion,"SELECT sum(cantidad) from gasto
+                                        INNER JOIN usuarios ON usuarios.id = gasto.idusuario 
+                                    WHERE usuarios.id = $idusuario");
 $row=mysqli_fetch_array($result);
 $dinero= $dinero - $row['sum(cantidad)'];
 
-$consultaSQL="SELECT * from producto";
+$consultaSQL="SELECT * from producto
+                INNER JOIN usuarios ON usuarios.id = producto.idusuario 
+                WHERE usuarios.id = $idusuario";
 $ejecutarConsulta=$conexion->query($consultaSQL);
 while ($fila=$ejecutarConsulta->fetch_array()){
-    $total = $fila[2]*$fila[3];
+    $total = $fila[4]*$fila[3];
     $dinero= $dinero - $total;
 }
 

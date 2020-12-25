@@ -26,7 +26,7 @@ switch ($accion) {
         }
     break;
 
-    
+    //Operaciones del Encargado
 
     /* 
     Codigo que permite guardar el empleado en la base de datos
@@ -36,7 +36,9 @@ switch ($accion) {
         $nombre=$_GET["nombre"];
         $apellido=$_GET["apellido"];
         $telefono=$_GET["telefono"];
-        $sql="INSERT into empleado values (0,'$clave','$nombre','$apellido','$telefono')";
+        $fecha = date("Y-m-d");
+        $idusuario=(int)$_SESSION['user'][0];
+        $sql="INSERT into empleado values (0,$idusuario,'$clave','$nombre','$apellido','$telefono','$fecha')";
         $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
@@ -96,7 +98,8 @@ switch ($accion) {
         $nombre=$_GET["nombre"];
         $apellido=$_GET["apellido"];
         $telefono=$_GET["telefono"];
-        $sql="INSERT into cliente values (0,'$clave','$nombre','$apellido','$telefono')";
+        $fecha = date("Y-m-d");
+        $sql="INSERT into cliente values (0,'$clave','$nombre','$apellido','$telefono','$fecha')";
         $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
@@ -156,7 +159,8 @@ switch ($accion) {
         $idempleado=$_GET["idempleado"];
         $tamano=$_GET["tamano"];
         $precio=$_GET["precio"];
-        $sql="INSERT into autolavado values (0,'$idcliente','$idempleado','$tamano','$precio')";
+        $fecha = date("Y-m-d");
+        $sql="INSERT into autolavado values (0,'$idcliente','$idempleado','$tamano','$precio','$fecha')";
         $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
@@ -226,11 +230,14 @@ switch ($accion) {
     */
     case 'buscarEmpleado';
         $clave=$_GET["clave"];
-        $sql="SELECT * FROM empleado WHERE clave = '$clave'";
+        $idusuario=(int)$_SESSION['user'][0];
+        $sql="SELECT * FROM empleado 
+                INNER JOIN usuarios ON usuarios.id = empleado.idusuario 
+                WHERE empleado.clave = '$clave' AND usuarios.id = $idusuario";
         $result = mysqli_query($conexion, $sql);
         $datosCliente =  mysqli_fetch_row($result);
         if($datosCliente != []){
-            echo $datosCliente[0].'&'.$datosCliente[2].' '.$datosCliente[3].' ';
+            echo $datosCliente[0].'&'.$datosCliente[3].' '.$datosCliente[4].' ';
         }else{
         }
     break;
@@ -261,16 +268,16 @@ switch ($accion) {
         $row=mysqli_fetch_array($result);
         $numeroAutosLavados= $row['COUNT(*)'];
         $cantidadPagada = 600 + ((600 * 0.05)*$numeroAutosLavados);
-        
-        $sql="INSERT into pagoempleado values (0,'$id','$cantidadPagada')";
-        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al cliente".$conexion->error);
+        $fecha = date("Y-m-d");
+        $sql="INSERT into pagoempleado values (0,'$id','$cantidadPagada','$fecha')";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar el pago".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
         }
         else
         {
             echo "0";
-        }
+        } 
     break;
     
     /* 
@@ -298,7 +305,9 @@ switch ($accion) {
     case 'agregarGasto':
         $descripcion=$_GET["descripcion"];
         $cantidad=$_GET["cantidad"];
-        $sql="INSERT into gasto values (0,'$descripcion','$cantidad')";
+        $fecha = date("Y-m-d");
+        $idusuario=(int)$_SESSION['user'][0];
+        $sql="INSERT into gasto values (0,$idusuario,'$descripcion','$cantidad','$fecha')";
         $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
@@ -354,8 +363,9 @@ switch ($accion) {
         $producto=$_GET["producto"];
         $cantidad=$_GET["cantidad"];
         $precio=$_GET["precio"];
-
-        $sql="INSERT into producto values (0,'$producto','$cantidad','$precio')";
+        $fecha = date("Y-m-d");
+        $idusuario=(int)$_SESSION['user'][0];
+        $sql="INSERT into producto values (0,$idusuario,'$producto','$cantidad','$precio','$fecha')";
         $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
         if ($ejecutarSQL) {
             echo "1";
@@ -404,7 +414,69 @@ switch ($accion) {
     break;
 
 
+    //Operaciones del administrador
     
+    /* 
+    Codigo que permite guardar el empleado en la base de datos
+    */
+    case 'agregarEncargado':
+        $nombre=$_GET["nombre"];
+        $apellido=$_GET["apellido"];
+        $telefono=$_GET["telefono"];
+        $email=$_GET["email"];
+        $pass=$_GET["pass"];
+        $fecha = date("Y-m-d");
+        $sql="INSERT into usuarios values (0,'$nombre','$apellido','$telefono', '$email', '$pass',2,'$fecha')";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".$conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+        echo "0";
+        }
+    break;
+
+    /* 
+        Este codigo permite actualizar la informacion de un epleado a un empleado
+    */
+    case 'editarEncargado':
+        $id = $_GET["id"];
+        $nombre=$_GET["nombre"];
+        $apellido=$_GET["apellido"];
+        $telefono=$_GET["telefono"];
+        $email=$_GET["email"];
+        $pass=$_GET["telefono"];
+        $sql="UPDATE usuarios set nombre='$nombre',apellido='$apellido',
+        telefono='$telefono', email='$email', pass='$pass' where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        } 
+        else
+        {
+            echo "0";
+        }
+    break;
+
+    /* 
+        codigo que permite eliminar el empleado
+    */
+    case 'eliminarEncargado';
+        $id=$_GET["id"];
+        $sql="DELETE from usuarios where id='$id'";
+        $ejecutarSQL=$conexion->query($sql) or die ("Error al insertar al empleado".
+        $conexion->error);
+        if ($ejecutarSQL) {
+            echo "1";
+        }
+        else
+        {
+            echo "0";
+        }
+    break;
+
     /* 
         AQUI SE DESTRYE LA SESION PARA QUE EL USUARIO, AL SALIR, YA NO PUEDA VOLVER
         A ENTRAR HASTA QUE INGRESE SUS DATOS

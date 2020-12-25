@@ -35,7 +35,7 @@
     <script src="js/funcionesEncargado.js"></script>
 </head>
 
-<body>
+<body class = "bg-light">
     <!-- Barra de navegacion -->
     <header id="barra">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -96,6 +96,7 @@
         <div class="jumbotron">
             <div class="container">
                 <h1 class="display-3">Sistema El Carrito Feliz!</h1>
+                <h3>Encargado</h3>
                 <p>Este sistema permite la automatizacion de el proceso de gestion de autolavado, administracion de empleados, clientes y el seguimiento de los 
                     gastos y pagos a empleados
                 </p>
@@ -182,7 +183,7 @@
                     </form>
                 </div>
                 <br>
-                <div id="divMostrarEmpleados" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
+                <div id="divMostrarEmpleados" class="col-10"></div>
             </div>
         </div>
         <div id="sectionCliente" style="display: none;">
@@ -218,7 +219,7 @@
                     </form>
                 </div>
                 <br>
-                <div id="divMostrarClientes" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
+                <div id="divMostrarClientes" class="col-9"></div>
             </div>
         </div>
         <div id="sectionAutoLavado" style="display: none;">
@@ -273,7 +274,7 @@
                     </form>
                 </div>
                 <br>
-                <div id="divMostrarAutoLavados" class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-xl-8"></div>
+                <div id="divMostrarAutoLavados" class="col-10"></div>
             </div>
         </div>
         <div id="sectionPagos" style="display: none;">

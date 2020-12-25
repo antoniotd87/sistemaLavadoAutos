@@ -150,19 +150,19 @@ $(document).ready(function () {
         var idempleado = $("#idempleado").html();
         var tamano = $('#tamanoAutoLavado').val();
         var precio = $("#precioAutoLavado").val();
-        if (precio == 0) {
-            alertify
-                .alert("Felicidades, ha lavado su auto con nosotros 5 veces, " +
-                    "asi que por esta ocacion es gratis", function () {
-                        alertify.message('OK');
-                    });
-        }
         if (idempleado === '' || tamano === '' || precio === '' || idcliente === '') {
             alertify
                 .alert("Parece que faltan datos", function () {
                     alertify.message('OK');
                 });
             return
+        }
+        if (precio == 0) {
+            alertify
+                .alert("Felicidades, ha lavado su auto con nosotros 5 veces, " +
+                    "asi que por esta ocacion es gratis", function () {
+                        alertify.message('OK');
+                    });
         }
         var accion;
         var id;
